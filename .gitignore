@@ -24,3 +24,7 @@ mime_sniff-*.tar
 
 # Temporary files, for example, from tests.
 /tmp/
+
+# dialyzer plt files
+/priv/plts/*.plt
+/priv/plts/*.plt.hash
