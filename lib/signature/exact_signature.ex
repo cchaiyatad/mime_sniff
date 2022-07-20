@@ -43,4 +43,17 @@ defmodule MimeSniff.ExactSignature do
   end
 
   defp do_match(_, _, _), do: {:error, :not_match}
+
+  def build([byte_pattern, mime_type]),
+    do: %__MODULE__{
+      byte_pattern: Helpers.hexs_with_space_to_binaries(byte_pattern),
+      mime_type: mime_type
+    }
+
+  def build([byte_pattern, _, mime_type]),
+    do: %__MODULE__{
+      byte_pattern: Helpers.hexs_with_space_to_binaries(byte_pattern),
+      mime_type: mime_type,
+      ignored_ws_leading_bytes: true
+    }
 end

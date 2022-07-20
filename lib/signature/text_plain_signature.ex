@@ -16,4 +16,6 @@ defmodule MimeSniff.TextPlainSignature do
   defp do_match(<<>>), do: {:ok, @mime_type}
   defp do_match(<<token::bytes-size(1), rest::binary>>) when not is_bd(token), do: do_match(rest)
   defp do_match(_), do: {:error, :not_match}
+
+  def build(_args), do: %__MODULE__{}
 end

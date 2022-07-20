@@ -61,4 +61,10 @@ defmodule MimeSniff.HTMLSignature do
   end
 
   defp do_match(_, _, _, _), do: {:error, :not_match}
+
+  def build([byte_pattern, pattern_mask]),
+    do: %__MODULE__{
+      byte_pattern: Helpers.hexs_with_space_to_binaries(byte_pattern),
+      pattern_mask: Helpers.hexs_with_space_to_binaries(pattern_mask)
+    }
 end
