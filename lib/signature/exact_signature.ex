@@ -1,10 +1,10 @@
-defmodule MimeSniff.Signature.ExactSignature do
+defmodule MimeSniff.ExactSignature do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
   """
   @behaviour MimeSniff.Signature
-  import MimeSniff.Guard
+  import MimeSniff.Guards
 
   defstruct byte_pattern: <<>>, ignored_ws_leading_bytes: false, mime_type: ""
 

@@ -1,10 +1,10 @@
-defmodule MimeSniff.Signature.HTMLSignature do
+defmodule MimeSniff.HTMLSignature do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
   """
   @behaviour MimeSniff.Signature
-  import MimeSniff.Guard
+  import MimeSniff.Guards
   use Bitwise
 
   defstruct byte_pattern: <<>>, pattern_mask: nil, mime_type: ""

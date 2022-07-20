@@ -1,6 +1,6 @@
-defmodule MimeSniff.Signature.HTMLSignatureTest do
+defmodule MimeSniff.HTMLSignatureTest do
   use ExUnit.Case
-  alias MimeSniff.Signature.HTMLSignature
+  alias MimeSniff.HTMLSignature
 
   @p_tag_byte_pattern <<0x3C, 0x50>>
   @p_tag_pattern_mask <<0xFF, 0xDF>>

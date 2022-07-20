@@ -1,4 +1,4 @@
-defmodule MimeSniff.Guard do
+defmodule MimeSniff.Guards do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#terminology
