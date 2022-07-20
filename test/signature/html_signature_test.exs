@@ -6,8 +6,7 @@ defmodule MimeSniff.HTMLSignatureTest do
   @p_tag_pattern_mask <<0xFF, 0xDF>>
   @p_tag_signature %HTMLSignature{
     byte_pattern: @p_tag_byte_pattern,
-    pattern_mask: @p_tag_pattern_mask,
-    mime_type: "text/html"
+    pattern_mask: @p_tag_pattern_mask
   }
 
   describe "match/2" do

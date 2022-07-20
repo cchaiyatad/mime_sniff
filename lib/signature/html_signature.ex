@@ -8,7 +8,9 @@ defmodule MimeSniff.HTMLSignature do
   alias MimeSniff.Helpers
   use Bitwise
 
-  defstruct byte_pattern: <<>>, pattern_mask: nil, mime_type: ""
+  @mime_type "text/html"
+
+  defstruct byte_pattern: <<>>, pattern_mask: nil
 
   def match(%__MODULE__{byte_pattern: byte_pattern} = signature, data) when is_binary(data) do
     with :ok <- valid_signature_pattern(signature),
@@ -41,11 +43,8 @@ defmodule MimeSniff.HTMLSignature do
   defp do_match(%__MODULE__{} = signature, data),
     do: do_match(signature, data, signature.byte_pattern, signature.pattern_mask)
 
-  defp do_match(%__MODULE__{mime_type: mime_type}, _, <<>>, <<>>), do: {:ok, mime_type}
-
-  defp do_match(%__MODULE__{} = signature, <<d::bytes-size(1), _>>, <<>>, <<>>) when is_tt(d) do
-    {:ok, signature.mime_type}
-  end
+  defp do_match(%__MODULE__{}, <<d::bytes-size(1), _>>, <<>>, <<>>) when is_tt(d),
+    do: {:ok, @mime_type}
 
   defp do_match(
          %__MODULE__{} = signature,
