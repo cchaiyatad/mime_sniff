@@ -5,6 +5,7 @@ defmodule MimeSniff.ExactSignature do
   """
   @behaviour MimeSniff.Signature
   import MimeSniff.Guards
+  alias MimeSniff.Helpers
 
   defstruct byte_pattern: <<>>, ignored_ws_leading_bytes: false, mime_type: ""
 
@@ -35,7 +36,7 @@ defmodule MimeSniff.ExactSignature do
          <<d::bytes-size(1), data_rest::binary>>,
          <<b::bytes-size(1), byte_pattern_rest::binary>>
        ) do
-    case :binary.decode_unsigned(d) == :binary.decode_unsigned(b) do
+    case Helpers.c_to_b(d) == Helpers.c_to_b(b) do
       false -> {:error, :not_match}
       true -> do_match(signature, data_rest, byte_pattern_rest)
     end

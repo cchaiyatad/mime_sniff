@@ -5,6 +5,7 @@ defmodule MimeSniff.MaskedSignature do
   """
   @behaviour MimeSniff.Signature
   import MimeSniff.Guards
+  alias MimeSniff.Helpers
   use Bitwise
 
   defstruct byte_pattern: <<>>, pattern_mask: nil, ignored_ws_leading_bytes: false, mime_type: ""
@@ -52,8 +53,7 @@ defmodule MimeSniff.MaskedSignature do
          <<b::bytes-size(1), byte_pattern_rest::binary>>,
          <<p::bytes-size(1), pattern_mask_rest::binary>>
        ) do
-    is_match =
-      (:binary.decode_unsigned(p) &&& :binary.decode_unsigned(d)) == :binary.decode_unsigned(b)
+    is_match = (Helpers.c_to_b(p) &&& Helpers.c_to_b(d)) == Helpers.c_to_b(b)
 
     case is_match do
       false -> {:error, :not_match}
