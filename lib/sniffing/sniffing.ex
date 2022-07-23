@@ -3,17 +3,11 @@ defmodule MimeSniff.Sniffing do
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#determining-the-computed-mime-type-of-a-resource
   """
-  alias MimeSniff.Helpers
+  alias MimeSniff.{DefaultSignatures, Helpers, Matchable}
+  @default_signatures DefaultSignatures.get()
 
   # https://mimesniff.spec.whatwg.org/#reading-the-resource-header
   @default_sniff_len 1445
-
-  @external_resource default_signatures_path = Path.join([__DIR__, "default_signatures"])
-  @comment_marker "#"
-
-  @default_signatures for line <- File.stream!(default_signatures_path, [], :line),
-                          not String.starts_with?(line, @comment_marker),
-                          do: Helpers.build_signature_from_line(line)
 
   def from_file(file_path, opts \\ []) do
     sniff_len = Keyword.get(opts, :sniff_len, @default_sniff_len)
@@ -36,7 +30,7 @@ defmodule MimeSniff.Sniffing do
   defp do_match([], _data), do: "application/octet-stream"
 
   defp do_match([sig | rest], data) do
-    case sig.__struct__.match(sig, data) do
+    case Matchable.match(sig, data) do
       {:ok, mime_type} -> mime_type
       {:error, _} -> do_match(rest, data)
     end
