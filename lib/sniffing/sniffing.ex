@@ -27,11 +27,11 @@ defmodule MimeSniff.Sniffing do
   end
 
   # 7.1.10 https://mimesniff.spec.whatwg.org/#identifying-a-resource-with-an-unknown-mime-type
-  defp do_match([], _data), do: "application/octet-stream"
+  defp do_match([], _data), do: {:ok, "application/octet-stream"}
 
   defp do_match([sig | rest], data) do
     case Matchable.match(sig, data) do
-      {:ok, mime_type} -> mime_type
+      {:ok, mime_type} -> {:ok, mime_type}
       {:error, _} -> do_match(rest, data)
     end
   end
