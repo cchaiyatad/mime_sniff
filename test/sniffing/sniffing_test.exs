@@ -1,7 +1,7 @@
 defmodule MimeSniff.SniffingTest do
   use ExUnit.Case
   doctest MimeSniff
-  alias MimeSniff.Sniffing
+  alias MimeSniff.{ExactSignature, MaskedSignature, Sniffing}
 
   describe "from_file/2" do
     test "return {:ok, mime_type} from file" do
@@ -42,6 +42,35 @@ defmodule MimeSniff.SniffingTest do
       # application/octet-stream (text file that has binary data byte)
       assert Sniffing.from_file("test/support/fixtures/bd_at_60_file") ==
                {:ok, "application/octet-stream"}
+    end
+
+    test "return {:ok, mime_type} when provided custom signature" do
+      custom_utf8_sig = %ExactSignature{byte_pattern: "UTF8", mime_type: "custom/utf8"}
+      custom_utf16_sig = %ExactSignature{byte_pattern: "UTF16", mime_type: "custom/utf16"}
+
+      assert Sniffing.from_file("test/support/fixtures/utf8_file.txt",
+               custom_signatures: [custom_utf16_sig, custom_utf8_sig]
+             ) ==
+               {:ok, "custom/utf8"}
+    end
+
+    test "return {:error, :invalid_pattern} when provided custom signature is invalid" do
+      invalid_sig = %MaskedSignature{
+        byte_pattern: "UTF8",
+        mime_type: "custom/invalid",
+        pattern_mask: <<255, 255, 255>>
+      }
+
+      assert Sniffing.from_file("test/support/fixtures/utf8_file.txt",
+               custom_signatures: [invalid_sig]
+             ) == {:error, :invalid_pattern}
+    end
+
+    test "return {:ok, mime_type} when send sniff_len option" do
+      # it return {:ok, "text/plain"} instead of {:ok, "application/octet-stream"}
+      # because it only sniff to the part that doesn't have binary data bit
+      assert Sniffing.from_file("test/support/fixtures/bd_at_60_file", sniff_len: 32) ==
+               {:ok, "text/plain"}
     end
   end
 

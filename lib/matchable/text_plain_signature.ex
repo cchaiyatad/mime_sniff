@@ -9,7 +9,7 @@ defimpl MimeSniff.Matchable, for: MimeSniff.TextPlainSignature do
   @mime_type "text/plain"
 
   def match(%TextPlainSignature{}, data) when is_binary(data), do: do_match(data)
-  def match(_, _), do: {:error, :invalid_input_data}
+  def match(_, _), do: {:error, :not_match}
 
   defp do_match(<<>>), do: {:ok, @mime_type}
   defp do_match(<<token::bytes-size(1), rest::binary>>) when not is_bd(token), do: do_match(rest)

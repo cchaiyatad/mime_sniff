@@ -8,10 +8,10 @@ defimpl MimeSniff.Matchable, for: MimeSniff.ExactSignature do
 
   def match(%ExactSignature{byte_pattern: byte_pattern} = signature, data) when is_binary(data) do
     with data <- ignored_ws_if_needed(signature, data),
-         true <- String.length(data) >= String.length(byte_pattern) do
+         true <- byte_size(data) >= byte_size(byte_pattern) do
       do_match(signature, data, byte_pattern)
     else
-      false -> {:error, :invalid_input_data}
+      false -> {:error, :not_match}
     end
   end
 

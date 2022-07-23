@@ -32,7 +32,8 @@ defmodule MimeSniff.Sniffing do
   defp do_match([sig | rest], data) do
     case Matchable.match(sig, data) do
       {:ok, mime_type} -> {:ok, mime_type}
-      {:error, _} -> do_match(rest, data)
+      {:error, :not_match} -> do_match(rest, data)
+      {:error, error} -> {:error, error}
     end
   end
 end

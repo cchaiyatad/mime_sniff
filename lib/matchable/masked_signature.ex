@@ -9,11 +9,11 @@ defimpl MimeSniff.Matchable, for: MimeSniff.MaskedSignature do
   def match(%MaskedSignature{byte_pattern: byte_pattern} = signature, data)
       when is_binary(data) do
     with :ok <- valid_signature_pattern(signature),
-         true <- String.length(data) >= String.length(byte_pattern) do
+         true <- byte_size(data) >= byte_size(byte_pattern) do
       do_match(signature, data)
     else
       {:error, :invalid_pattern} -> {:error, :invalid_pattern}
-      false -> {:error, :invalid_input_data}
+      false -> {:error, :not_match}
     end
   end
 
@@ -26,7 +26,7 @@ defimpl MimeSniff.Matchable, for: MimeSniff.MaskedSignature do
     do: {:error, :invalid_pattern}
 
   defp valid_signature_pattern(%MaskedSignature{} = signature) do
-    case String.length(signature.byte_pattern) == String.length(signature.pattern_mask) do
+    case byte_size(signature.byte_pattern) == byte_size(signature.pattern_mask) do
       true -> :ok
       false -> {:error, :invalid_pattern}
     end
