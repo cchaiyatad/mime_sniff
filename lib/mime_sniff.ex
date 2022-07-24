@@ -17,6 +17,10 @@ defmodule MimeSniff do
 
     iex> MimeSniff.from_file("support/fixtures/png_file.png")
     {:ok, "image/png"}
+
+    # only read 32 bytes, if not provided default is 512 bytes
+    iex> MimeSniff.from_file("support/fixtures/jpg_file.jpg", sniff_len: 32)
+    {:ok, "image/jpeg"}
   """
   @spec from_file(binary(), keyword()) :: {:ok, String.t()} | {:error, atom()}
   def from_file(file_path, opts \\ []), do: Sniffing.from_file(file_path, opts)
