@@ -1,11 +1,12 @@
 defmodule MimeSniff.MatchableTest do
   use ExUnit.Case
 
-  alias MimeSniff.{
+  alias MimeSniff.Matchable
+
+  alias MimeSniff.Signatures.{
     ExactSignature,
     HTMLSignature,
     MaskedSignature,
-    Matchable,
     MP4Signature,
     TextPlainSignature
   }

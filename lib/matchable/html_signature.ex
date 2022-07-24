@@ -1,10 +1,12 @@
-defimpl MimeSniff.Matchable, for: MimeSniff.HTMLSignature do
+defimpl MimeSniff.Matchable, for: MimeSniff.Signatures.HTMLSignature do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
   """
-  import MimeSniff.Guards
-  alias MimeSniff.{Helpers, HTMLSignature}
+  import MimeSniff.MimeSniff.Guards
+  alias MimeSniff.MimeSniff.Helpers
+  alias MimeSniff.Signatures.HTMLSignature
+
   use Bitwise
 
   @mime_type "text/html"

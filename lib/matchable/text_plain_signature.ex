@@ -1,10 +1,10 @@
-defimpl MimeSniff.Matchable, for: MimeSniff.TextPlainSignature do
+defimpl MimeSniff.Matchable, for: MimeSniff.Signatures.TextPlainSignature do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
   """
-  import MimeSniff.Guards
-  alias MimeSniff.TextPlainSignature
+  import MimeSniff.MimeSniff.Guards
+  alias MimeSniff.Signatures.TextPlainSignature
 
   @mime_type "text/plain"
 

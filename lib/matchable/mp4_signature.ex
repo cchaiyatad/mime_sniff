@@ -1,10 +1,12 @@
-defimpl MimeSniff.Matchable, for: MimeSniff.MP4Signature do
+defimpl MimeSniff.Matchable, for: MimeSniff.Signatures.MP4Signature do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
   """
 
-  alias MimeSniff.{Helpers, MP4Signature}
+  alias MimeSniff.MimeSniff.Helpers
+  alias MimeSniff.Signatures.MP4Signature
+
   @mime_type "video/mp4"
 
   def match(%MP4Signature{}, data) when is_binary(data) do

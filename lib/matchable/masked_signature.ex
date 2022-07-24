@@ -1,9 +1,10 @@
-defimpl MimeSniff.Matchable, for: MimeSniff.MaskedSignature do
+defimpl MimeSniff.Matchable, for: MimeSniff.Signatures.MaskedSignature do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
   """
-  alias MimeSniff.{Helpers, MaskedSignature}
+  alias MimeSniff.MimeSniff.Helpers
+  alias MimeSniff.Signatures.MaskedSignature
   use Bitwise
 
   def match(%MaskedSignature{byte_pattern: byte_pattern} = signature, data)

@@ -1,11 +1,13 @@
-defmodule MimeSniff.DefaultSignaturesTest do
+defmodule MimeSniff.MimeSniff.DefaultSignaturesTest do
   use ExUnit.Case
 
-  alias MimeSniff.{
-    DefaultSignatures,
+  alias MimeSniff.MimeSniff.DefaultSignatures
+
+  alias MimeSniff.Signatures.{
     ExactSignature,
     HTMLSignature,
     MaskedSignature,
+    MP4Signature,
     TextPlainSignature
   }
 
@@ -158,8 +160,8 @@ defmodule MimeSniff.DefaultSignaturesTest do
                  mime_type: "audio/wave",
                  pattern_mask: <<255, 255, 255, 255, 0, 0, 0, 0, 255, 255, 255, 255>>
                },
-               %MimeSniff.MP4Signature{},
-               %MimeSniff.ExactSignature{
+               %MP4Signature{},
+               %ExactSignature{
                  byte_pattern: <<26, 69, 223, 163>>,
                  mime_type: "video/webm"
                },

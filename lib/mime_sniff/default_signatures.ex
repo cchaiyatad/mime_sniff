@@ -1,7 +1,7 @@
-defmodule MimeSniff.DefaultSignatures do
+defmodule MimeSniff.MimeSniff.DefaultSignatures do
   @moduledoc false
 
-  alias MimeSniff.{
+  alias MimeSniff.Signatures.{
     ExactSignature,
     HTMLSignature,
     MaskedSignature,
@@ -18,7 +18,10 @@ defmodule MimeSniff.DefaultSignatures do
     "TextPlainSignature" => :text_plain,
     "MP4Signature" => :mp4
   }
-
+  @doc """
+  Get default signature from default_signatures file
+  return list of Signature
+  """
   def get do
     for line <- File.stream!(@default_signatures_path, [], :line),
         not String.starts_with?(line, @comment_marker),

@@ -1,10 +1,11 @@
-defimpl MimeSniff.Matchable, for: MimeSniff.ExactSignature do
+defimpl MimeSniff.Matchable, for: MimeSniff.Signatures.ExactSignature do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
   """
-  import MimeSniff.Guards
-  alias MimeSniff.{ExactSignature, Helpers}
+  import MimeSniff.MimeSniff.Guards
+  alias MimeSniff.MimeSniff.Helpers
+  alias MimeSniff.Signatures.ExactSignature
 
   def match(%ExactSignature{byte_pattern: byte_pattern} = signature, data) when is_binary(data) do
     with data <- ignored_ws_if_needed(signature, data),

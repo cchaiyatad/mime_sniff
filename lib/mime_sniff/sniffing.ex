@@ -1,9 +1,9 @@
-defmodule MimeSniff.Sniffing do
-  @moduledoc """
-  Functions in this module were implemented
-  as defined in https://mimesniff.spec.whatwg.org/#determining-the-computed-mime-type-of-a-resource
-  """
-  alias MimeSniff.{DefaultSignatures, Helpers, Matchable}
+defmodule MimeSniff.MimeSniff.Sniffing do
+  @moduledoc false
+
+  alias MimeSniff.Matchable
+  alias MimeSniff.MimeSniff.{DefaultSignatures, Helpers}
+
   @default_signatures DefaultSignatures.get()
 
   # https://mimesniff.spec.whatwg.org/#reading-the-resource-header

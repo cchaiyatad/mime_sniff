@@ -1,6 +1,6 @@
-defmodule MimeSniff.GuardsTest do
+defmodule MimeSniff.MimeSniff.GuardsTest do
   use ExUnit.Case
-  import MimeSniff.Guards
+  import MimeSniff.MimeSniff.Guards
 
   defp is_ws?(token) when is_ws(token), do: true
   defp is_ws?(_token), do: false
