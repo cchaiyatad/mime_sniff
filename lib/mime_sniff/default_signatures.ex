@@ -1,7 +1,13 @@
 defmodule MimeSniff.DefaultSignatures do
   @moduledoc false
 
-  alias MimeSniff.{ExactSignature, HTMLSignature, MaskedSignature, TextPlainSignature}
+  alias MimeSniff.{
+    ExactSignature,
+    HTMLSignature,
+    MaskedSignature,
+    MP4Signature,
+    TextPlainSignature
+  }
 
   @default_signatures_path Path.join([__DIR__, "default_signatures"])
   @comment_marker "#"
@@ -9,7 +15,8 @@ defmodule MimeSniff.DefaultSignatures do
     "ExactSignature" => :exact,
     "HTMLSignature" => :html,
     "MaskedSignature" => :masked,
-    "TextPlainSignature" => :text_plain
+    "TextPlainSignature" => :text_plain,
+    "MP4Signature" => :mp4
   }
 
   def get do
@@ -48,6 +55,8 @@ defmodule MimeSniff.DefaultSignatures do
       pattern_mask: hexs_with_space_to_binaries(pattern_mask),
       mime_type: mime_type
     }
+
+  defp build_signature(:mp4, _args), do: %MP4Signature{}
 
   defp build_signature(:text_plain, _args), do: %TextPlainSignature{}
 

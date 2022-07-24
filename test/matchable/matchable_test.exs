@@ -1,6 +1,14 @@
 defmodule MimeSniff.MatchableTest do
   use ExUnit.Case
-  alias MimeSniff.{ExactSignature, HTMLSignature, MaskedSignature, Matchable, TextPlainSignature}
+
+  alias MimeSniff.{
+    ExactSignature,
+    HTMLSignature,
+    MaskedSignature,
+    Matchable,
+    MP4Signature,
+    TextPlainSignature
+  }
 
   describe "match/2 with ExactSignature" do
     setup do
@@ -93,6 +101,52 @@ defmodule MimeSniff.MatchableTest do
     } do
       xml_data = <<254, 255, 15, 32>>
       assert Matchable.match(utf_16be_bom_signature, xml_data) == {:ok, "text/plain"}
+    end
+  end
+
+  describe "match/2 with MP4Signature" do
+    test "return {:ok, video/mp4} with valid input" do
+      # first 64 bytes from mp4 file
+      mp4_data =
+        <<0, 0, 0, 32, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
+          105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49, 0, 0, 68, 128, 109, 111, 111, 118,
+          0, 0, 0, 108, 109, 118, 104, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 232>>
+
+      assert Matchable.match(%MP4Signature{}, mp4_data) == {:ok, "video/mp4"}
+    end
+
+    test "return {:error, :not_match} when input length(data) < 12 (6.2.1.3)" do
+      # first 10 bytes from mp4 file
+      mp4_data = <<0, 0, 0, 32, 102, 116, 121, 112, 105, 115>>
+
+      assert Matchable.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+    end
+
+    test "return {:error, :not_match} when length(data) is less than box_size (6.2.1.5)" do
+      # first 32 bytes from mp4 file with box_size = 64
+      mp4_data =
+        <<0, 0, 0, 64, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
+          105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
+
+      assert Matchable.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+    end
+
+    test "return {:error, :not_match} when box_size % 4 != 0, (6.2.1.5)" do
+      # first 32 bytes from mp4 file with box_size = 18
+      mp4_data =
+        <<0, 0, 0, 18, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
+          105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
+
+      assert Matchable.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+    end
+
+    test "return {:error, :not_match} with valid input" do
+      # first 32 bytes from mp4 file with mp4 at bytes[29:32]
+      mp4_data =
+        <<0, 0, 0, 20, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
+          105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
+
+      assert Matchable.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
     end
   end
 

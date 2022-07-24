@@ -40,6 +40,8 @@ ExactSignature,4F 67 67 53 00,application/ogg
 ExactSignature,4D 54 68 64 00 00 00 06,audio/midi
 MaskedSignature,52 49 46 46 00 00 00 00 41 56 49 20,FF FF FF FF 00 00 00 00 FF FF FF FF,video/avi
 MaskedSignature,52 49 46 46 00 00 00 00 57 41 56 45,FF FF FF FF 00 00 00 00 FF FF FF FF,audio/wave
+# 6.2.1 Matching a MP4 pattern https://mimesniff.spec.whatwg.org/#signature-for-mp4
+MP4Signature
 # 7.1.? Matching a font type pattern https://mimesniff.spec.whatwg.org/#matching-a-font-type-pattern
 MaskedSignature,00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 4C 50,00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF,application/vnd.ms-fontobject
 ExactSignature,00 01 00 00,font/ttf

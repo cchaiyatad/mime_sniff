@@ -32,6 +32,9 @@ defmodule MimeSniff.SniffingTest do
       # pdf
       assert Sniffing.from_file("test/support/fixtures/pdf_file.pdf") == {:ok, "application/pdf"}
 
+      # mp4
+      assert Sniffing.from_file("test/support/fixtures/mp4_file.mp4") == {:ok, "video/mp4"}
+
       # excel
       assert Sniffing.from_file("test/support/fixtures/excel_file.xlsx") ==
                {:ok, "application/zip"}

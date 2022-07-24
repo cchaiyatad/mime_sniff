@@ -7,7 +7,7 @@ defmodule MimeSniff.Sniffing do
   @default_signatures DefaultSignatures.get()
 
   # https://mimesniff.spec.whatwg.org/#reading-the-resource-header
-  @default_sniff_len 1445
+  @default_sniff_len 512
 
   def from_file(file_path, opts \\ []) do
     sniff_len = Keyword.get(opts, :sniff_len, @default_sniff_len)

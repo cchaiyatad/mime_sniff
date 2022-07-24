@@ -20,8 +20,6 @@ defimpl MimeSniff.Matchable, for: MimeSniff.HTMLSignature do
     end
   end
 
-  def match(_signature, _data), do: {:error, :invalid_data}
-
   defp valid_signature_pattern(%HTMLSignature{byte_pattern: nil}), do: {:error, :invalid_pattern}
   defp valid_signature_pattern(%HTMLSignature{pattern_mask: nil}), do: {:error, :invalid_pattern}
 

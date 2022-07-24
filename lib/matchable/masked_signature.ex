@@ -17,8 +17,6 @@ defimpl MimeSniff.Matchable, for: MimeSniff.MaskedSignature do
     end
   end
 
-  def match(_signature, _data), do: {:error, :invalid_data}
-
   defp valid_signature_pattern(%MaskedSignature{byte_pattern: nil}),
     do: {:error, :invalid_pattern}
 

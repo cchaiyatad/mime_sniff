@@ -15,8 +15,6 @@ defimpl MimeSniff.Matchable, for: MimeSniff.ExactSignature do
     end
   end
 
-  def match(_signature, _data), do: {:error, :invalid_data}
-
   defp ignored_ws_if_needed(
          %ExactSignature{ignored_ws_leading_bytes: true} = signature,
          <<token::bytes-size(1), rest::binary>>
