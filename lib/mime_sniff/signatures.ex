@@ -1,4 +1,40 @@
-defmodule MimeSniff.MimeSniff.DefaultSignatures do
+defmodule MimeSniff.Signatures.ExactSignature do
+  @moduledoc """
+  Functions in this module were implemented
+  as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
+  """
+
+  defstruct byte_pattern: <<>>, ignored_ws_leading_bytes: false, mime_type: ""
+end
+
+defmodule MimeSniff.Signatures.MaskedSignature do
+  @moduledoc """
+  Functions in this module were implemented
+  as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
+  """
+
+  defstruct byte_pattern: <<>>, pattern_mask: nil, mime_type: ""
+end
+
+defmodule MimeSniff.Signatures.HTMLSignature do
+  @moduledoc false
+
+  defstruct byte_pattern: <<>>, pattern_mask: nil
+end
+
+defmodule MimeSniff.Signatures.MP4Signature do
+  @moduledoc false
+
+  defstruct []
+end
+
+defmodule MimeSniff.Signatures.TextPlainSignature do
+  @moduledoc false
+
+  defstruct []
+end
+
+defmodule MimeSniff.MimeSniff.Signatures do
   @moduledoc false
 
   alias MimeSniff.Signatures.{
@@ -22,7 +58,7 @@ defmodule MimeSniff.MimeSniff.DefaultSignatures do
   Get default signature from default_signatures file
   return list of Signature
   """
-  def get do
+  def get_default_signatures do
     for line <- File.stream!(@default_signatures_path, [], :line),
         not String.starts_with?(line, @comment_marker),
         do: build_signature_from_line(line)

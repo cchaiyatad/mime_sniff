@@ -1,7 +1,7 @@
 defmodule MimeSniff.MimeSniff.Guards do
   @moduledoc """
-  Functions in this module were implemented
-  as defined in https://mimesniff.spec.whatwg.org/#terminology
+  Functions in this module were implemented as defined
+  in [terminlogy](https://mimesniff.spec.whatwg.org/#terminology)
   """
 
   @whitespace_byte [<<0x09>>, <<0x0A>>, <<0x0C>>, <<0x0D>>, <<0x20>>]
@@ -37,18 +37,27 @@ defmodule MimeSniff.MimeSniff.Guards do
   ]
 
   @doc """
-  A whitespace byte (abbreviated 0xWS) is any one of the following bytes:
+  A gaurd that returns true if term is a whitespace byte;
+  otherwise returns false.
+
+  A whitespace byte is any one of the following bytes:
   0x09 (HT), 0x0A (LF), 0x0C (FF), 0x0D (CR), 0x20 (SP).
   """
   defguard is_ws(token) when token in @whitespace_byte
 
   @doc """
-  A tag-terminating byte (abbreviated 0xTT) is any one of the following bytes:
+  A gaurd that returns true if term is a tag-terminating byte;
+  otherwise returns false.
+
+  A tag-terminating byte is any one of the following bytes:
   0x20 (SP), 0x3E (">").
   """
   defguard is_tt(token) when token in @tag_terminating_byte
 
   @doc """
+  A gaurd that returns true if term is a binary data byte;
+  otherwise returns false.
+
   A binary data byte is a byte in the range 0x00 to 0x08 (NUL to BS),
   the byte 0x0B (VT), a byte in the range 0x0E to 0x1A (SO to SUB),
   or a byte in the range 0x1C to 0x1F (FS to US).

@@ -43,7 +43,7 @@ defmodule MimeSniff.MimeSniff.SniffingTest do
       assert Sniffing.from_file("support/fixtures/csv_file.csv") == {:ok, "text/plain"}
 
       # application/octet-stream (text file that has binary data byte)
-      assert Sniffing.from_file("support/fixtures/bd_at_60_file") ==
+      assert Sniffing.from_file("support/fixtures/bd_at_30_file") ==
                {:ok, "application/octet-stream"}
     end
 
@@ -72,7 +72,7 @@ defmodule MimeSniff.MimeSniff.SniffingTest do
     test "return {:ok, mime_type} when send sniff_len option" do
       # it return {:ok, "text/plain"} instead of {:ok, "application/octet-stream"}
       # because it only sniff to the part that doesn't have binary data bit
-      assert Sniffing.from_file("support/fixtures/bd_at_60_file", sniff_len: 32) ==
+      assert Sniffing.from_file("support/fixtures/bd_at_30_file", sniff_len: 15) ==
                {:ok, "text/plain"}
     end
   end

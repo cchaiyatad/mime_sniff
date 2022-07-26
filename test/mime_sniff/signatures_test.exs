@@ -1,7 +1,7 @@
-defmodule MimeSniff.MimeSniff.DefaultSignaturesTest do
+defmodule MimeSniff.MimeSniff.SignaturesTest do
   use ExUnit.Case
 
-  alias MimeSniff.MimeSniff.DefaultSignatures
+  alias MimeSniff.MimeSniff.Signatures
 
   alias MimeSniff.Signatures.{
     ExactSignature,
@@ -11,9 +11,9 @@ defmodule MimeSniff.MimeSniff.DefaultSignaturesTest do
     TextPlainSignature
   }
 
-  describe "get/1" do
+  describe "get_default_signatures/1" do
     test "return list of signature from default_signatures file" do
-      default_signatures = DefaultSignatures.get()
+      default_signatures = Signatures.get_default_signatures()
 
       assert length(default_signatures) == 49
 

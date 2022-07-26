@@ -2,12 +2,13 @@ defmodule MimeSniff.MimeSniff.Sniffing do
   @moduledoc false
 
   alias MimeSniff.Matchable
-  alias MimeSniff.MimeSniff.{DefaultSignatures, Helpers}
+  alias MimeSniff.MimeSniff.{Signatures, Helpers}
 
-  @default_signatures DefaultSignatures.get()
+  @default_signatures Signatures.get_default_signatures()
 
-  # https://mimesniff.spec.whatwg.org/#reading-the-resource-header
-  @default_sniff_len 512
+  # 36 is the minimum number of bytes to use
+  # to support all file type that program can sniff
+  @default_sniff_len 36
 
   @type sniff_opt :: {:sniff_len, integer()} | {:custom_signatures, term()}
 

@@ -14,18 +14,18 @@ parallel: 1
 inputs: 1 file (empty_file), 1 file (jpg), 1 file (pdf), 1 file (png), 10,000 files, 100 files
 Estimated total run time: 2.70 min
 
-Benchmarking MimeSniff.from_file (512 bytes) with input 1 file (empty_file) ...
-Benchmarking MimeSniff.from_file (512 bytes) with input 1 file (jpg) ...
-Benchmarking MimeSniff.from_file (512 bytes) with input 1 file (pdf) ...
-Benchmarking MimeSniff.from_file (512 bytes) with input 1 file (png) ...
-Benchmarking MimeSniff.from_file (512 bytes) with input 10,000 files ...
-Benchmarking MimeSniff.from_file (512 bytes) with input 100 files ...
 Benchmarking MimeSniff.from_file (64 bytes) with input 1 file (empty_file) ...
 Benchmarking MimeSniff.from_file (64 bytes) with input 1 file (jpg) ...
 Benchmarking MimeSniff.from_file (64 bytes) with input 1 file (pdf) ...
 Benchmarking MimeSniff.from_file (64 bytes) with input 1 file (png) ...
 Benchmarking MimeSniff.from_file (64 bytes) with input 10,000 files ...
 Benchmarking MimeSniff.from_file (64 bytes) with input 100 files ...
+Benchmarking MimeSniff.from_file (default: 32 bytes) with input 1 file (empty_file) ...
+Benchmarking MimeSniff.from_file (default: 32 bytes) with input 1 file (jpg) ...
+Benchmarking MimeSniff.from_file (default: 32 bytes) with input 1 file (pdf) ...
+Benchmarking MimeSniff.from_file (default: 32 bytes) with input 1 file (png) ...
+Benchmarking MimeSniff.from_file (default: 32 bytes) with input 10,000 files ...
+Benchmarking MimeSniff.from_file (default: 32 bytes) with input 100 files ...
 Benchmarking file --mime-type with input 1 file (empty_file) ...
 Benchmarking file --mime-type with input 1 file (jpg) ...
 Benchmarking file --mime-type with input 1 file (pdf) ...
@@ -34,121 +34,121 @@ Benchmarking file --mime-type with input 10,000 files ...
 Benchmarking file --mime-type with input 100 files ...
 
 ##### With input 1 file (empty_file) #####
-Name                                      ips        average  deviation         median         99th %
-MimeSniff.from_file (64 bytes)        16.04 K       62.33 μs    ±63.78%       55.42 μs      154.61 μs
-MimeSniff.from_file (512 bytes)       14.87 K       67.26 μs   ±118.14%       56.30 μs      224.77 μs
-file --mime-type                       0.25 K     4078.04 μs    ±13.90%     3911.25 μs     6253.07 μs
+Name                                              ips        average  deviation         median         99th %
+MimeSniff.from_file (default: 32 bytes)       14.96 K       66.83 μs    ±73.48%       60.89 μs      143.75 μs
+MimeSniff.from_file (64 bytes)                11.67 K       85.68 μs    ±66.27%       73.23 μs      232.69 μs
+file --mime-type                               0.29 K     3445.78 μs     ±8.21%     3386.49 μs     4501.92 μs
 
 Comparison:
-MimeSniff.from_file (64 bytes)        16.04 K
-MimeSniff.from_file (512 bytes)       14.87 K - 1.08x slower +4.93 μs
-file --mime-type                       0.25 K - 65.43x slower +4015.71 μs
+MimeSniff.from_file (default: 32 bytes)       14.96 K
+MimeSniff.from_file (64 bytes)                11.67 K - 1.28x slower +18.86 μs
+file --mime-type                               0.29 K - 51.56x slower +3378.96 μs
 
 Memory usage statistics:
 
-Name                               Memory usage
-MimeSniff.from_file (64 bytes)          3.54 KB
-MimeSniff.from_file (512 bytes)         3.50 KB - 0.99x memory usage -0.03906 KB
-file --mime-type                       30.08 KB - 8.50x memory usage +26.54 KB
+Name                                       Memory usage
+MimeSniff.from_file (default: 32 bytes)         3.50 KB
+MimeSniff.from_file (64 bytes)                  3.54 KB - 1.01x memory usage +0.0391 KB
+file --mime-type                               30.08 KB - 8.59x memory usage +26.58 KB
 
 **All measurements for memory usage were the same**
 
 ##### With input 1 file (jpg) #####
-Name                                      ips        average  deviation         median         99th %
-MimeSniff.from_file (64 bytes)        10.84 K       92.27 μs   ±117.76%       82.25 μs      202.98 μs
-MimeSniff.from_file (512 bytes)        9.50 K      105.26 μs    ±71.84%       94.41 μs      238.97 μs
-file --mime-type                       0.23 K     4290.17 μs    ±10.20%     4165.85 μs     6227.66 μs
+Name                                              ips        average  deviation         median         99th %
+MimeSniff.from_file (64 bytes)                10.90 K       91.76 μs    ±29.86%       84.70 μs      179.18 μs
+MimeSniff.from_file (default: 32 bytes)       10.61 K       94.24 μs   ±186.78%       82.90 μs      209.47 μs
+file --mime-type                               0.27 K     3738.96 μs    ±11.64%     3639.45 μs     5077.04 μs
 
 Comparison:
-MimeSniff.from_file (64 bytes)        10.84 K
-MimeSniff.from_file (512 bytes)        9.50 K - 1.14x slower +12.98 μs
-file --mime-type                       0.23 K - 46.49x slower +4197.90 μs
+MimeSniff.from_file (64 bytes)                10.90 K
+MimeSniff.from_file (default: 32 bytes)       10.61 K - 1.03x slower +2.49 μs
+file --mime-type                               0.27 K - 40.75x slower +3647.21 μs
 
 Memory usage statistics:
 
-Name                               Memory usage
-MimeSniff.from_file (64 bytes)         27.03 KB
-MimeSniff.from_file (512 bytes)        67.98 KB - 2.52x memory usage +40.95 KB
-file --mime-type                       30.08 KB - 1.11x memory usage +3.05 KB
+Name                                       Memory usage
+MimeSniff.from_file (64 bytes)                 27.03 KB
+MimeSniff.from_file (default: 32 bytes)        22.25 KB - 0.82x memory usage -4.78125 KB
+file --mime-type                               30.08 KB - 1.11x memory usage +3.05 KB
 
 **All measurements for memory usage were the same**
 
 ##### With input 1 file (pdf) #####
-Name                                      ips        average  deviation         median         99th %
-MimeSniff.from_file (64 bytes)        12.06 K       82.90 μs    ±35.20%       76.69 μs      168.25 μs
-MimeSniff.from_file (512 bytes)        9.40 K      106.33 μs    ±64.52%       97.00 μs      227.33 μs
-file --mime-type                       0.20 K     4982.42 μs    ±14.51%     4752.41 μs     8048.32 μs
+Name                                              ips        average  deviation         median         99th %
+MimeSniff.from_file (default: 32 bytes)       11.93 K       83.84 μs    ±56.25%       77.32 μs      168.16 μs
+MimeSniff.from_file (64 bytes)                11.44 K       87.39 μs    ±34.14%       80.88 μs      169.03 μs
+file --mime-type                               0.25 K     3929.81 μs    ±10.16%     3860.03 μs     5076.98 μs
 
 Comparison:
-MimeSniff.from_file (64 bytes)        12.06 K
-MimeSniff.from_file (512 bytes)        9.40 K - 1.28x slower +23.43 μs
-file --mime-type                       0.20 K - 60.10x slower +4899.52 μs
+MimeSniff.from_file (default: 32 bytes)       11.93 K
+MimeSniff.from_file (64 bytes)                11.44 K - 1.04x slower +3.55 μs
+file --mime-type                               0.25 K - 46.87x slower +3845.96 μs
 
 Memory usage statistics:
 
-Name                               Memory usage
-MimeSniff.from_file (64 bytes)         21.62 KB
-MimeSniff.from_file (512 bytes)        75.87 KB - 3.51x memory usage +54.25 KB
-file --mime-type                       30.08 KB - 1.39x memory usage +8.46 KB
+Name                                       Memory usage
+MimeSniff.from_file (default: 32 bytes)        17.24 KB
+MimeSniff.from_file (64 bytes)                 21.62 KB - 1.25x memory usage +4.38 KB
+file --mime-type                               30.08 KB - 1.74x memory usage +12.84 KB
 
 **All measurements for memory usage were the same**
 
 ##### With input 1 file (png) #####
-Name                                      ips        average  deviation         median         99th %
-MimeSniff.from_file (64 bytes)         9.61 K      104.02 μs   ±787.37%       82.35 μs      197.73 μs
-MimeSniff.from_file (512 bytes)        8.60 K      116.26 μs    ±36.16%      108.31 μs      224.44 μs
-file --mime-type                       0.20 K     4937.57 μs    ±37.69%     4507.19 μs    14785.79 μs
+Name                                              ips        average  deviation         median         99th %
+MimeSniff.from_file (default: 32 bytes)       11.28 K       88.62 μs    ±49.93%       82.42 μs      167.51 μs
+MimeSniff.from_file (64 bytes)                10.42 K       95.93 μs    ±36.26%       88.11 μs      201.22 μs
+file --mime-type                               0.25 K     4074.19 μs     ±8.49%     3966.82 μs     5393.54 μs
 
 Comparison:
-MimeSniff.from_file (64 bytes)         9.61 K
-MimeSniff.from_file (512 bytes)        8.60 K - 1.12x slower +12.24 μs
-file --mime-type                       0.20 K - 47.47x slower +4833.55 μs
+MimeSniff.from_file (default: 32 bytes)       11.28 K
+MimeSniff.from_file (64 bytes)                10.42 K - 1.08x slower +7.31 μs
+file --mime-type                               0.25 K - 45.98x slower +3985.57 μs
 
 Memory usage statistics:
 
-Name                               Memory usage
-MimeSniff.from_file (64 bytes)         28.11 KB
-MimeSniff.from_file (512 bytes)        94.37 KB - 3.36x memory usage +66.26 KB
-file --mime-type                       30.08 KB - 1.07x memory usage +1.97 KB
+Name                                       Memory usage
+MimeSniff.from_file (default: 32 bytes)        22.77 KB
+MimeSniff.from_file (64 bytes)                 28.11 KB - 1.23x memory usage +5.34 KB
+file --mime-type                               30.08 KB - 1.32x memory usage +7.30 KB
 
 **All measurements for memory usage were the same**
 
 ##### With input 10,000 files #####
-Name                                      ips        average  deviation         median         99th %
-MimeSniff.from_file (64 bytes)           0.99         1.01 s     ±4.98%         0.98 s         1.08 s
-MimeSniff.from_file (512 bytes)          0.90         1.11 s     ±2.36%         1.09 s         1.14 s
-file --mime-type                      0.00900       111.11 s     ±0.00%       111.11 s       111.11 s
+Name                                              ips        average  deviation         median         99th %
+MimeSniff.from_file (64 bytes)                   0.98         1.02 s     ±0.56%         1.02 s         1.03 s
+MimeSniff.from_file (default: 32 bytes)          0.96         1.04 s     ±8.04%         0.99 s         1.14 s
+file --mime-type                              0.00919       108.86 s     ±0.00%       108.86 s       108.86 s
 
 Comparison:
-MimeSniff.from_file (64 bytes)           0.99
-MimeSniff.from_file (512 bytes)          0.90 - 1.10x slower +0.101 s
-file --mime-type                      0.00900 - 110.54x slower +110.10 s
+MimeSniff.from_file (64 bytes)                   0.98
+MimeSniff.from_file (default: 32 bytes)          0.96 - 1.02x slower +0.0209 s
+file --mime-type                              0.00919 - 106.65x slower +107.84 s
 
 Memory usage statistics:
 
-Name                               Memory usage
-MimeSniff.from_file (64 bytes)        275.91 MB
-MimeSniff.from_file (512 bytes)       466.16 MB - 1.69x memory usage +190.25 MB
-file --mime-type                      367.82 MB - 1.33x memory usage +91.91 MB
+Name                                       Memory usage
+MimeSniff.from_file (64 bytes)                253.07 MB
+MimeSniff.from_file (default: 32 bytes)       228.64 MB - 0.90x memory usage -24.43215 MB
+file --mime-type                              367.87 MB - 1.45x memory usage +114.80 MB
 
 **All measurements for memory usage were the same**
 
 ##### With input 100 files #####
-Name                                      ips        average  deviation         median         99th %
-MimeSniff.from_file (512 bytes)         94.52       10.58 ms    ±12.34%       10.23 ms       17.16 ms
-MimeSniff.from_file (64 bytes)          61.80       16.18 ms   ±159.28%       10.90 ms      134.56 ms
-file --mime-type                         0.92     1085.06 ms     ±1.47%     1083.45 ms     1107.73 ms
+Name                                              ips        average  deviation         median         99th %
+MimeSniff.from_file (default: 32 bytes)        106.24        9.41 ms     ±8.08%        9.25 ms       12.84 ms
+MimeSniff.from_file (64 bytes)                 100.62        9.94 ms    ±15.81%        9.61 ms       15.61 ms
+file --mime-type                                 0.95     1047.83 ms     ±1.28%     1045.00 ms     1067.27 ms
 
 Comparison:
-MimeSniff.from_file (512 bytes)         94.52
-MimeSniff.from_file (64 bytes)          61.80 - 1.53x slower +5.60 ms
-file --mime-type                         0.92 - 102.56x slower +1074.48 ms
+MimeSniff.from_file (default: 32 bytes)        106.24
+MimeSniff.from_file (64 bytes)                 100.62 - 1.06x slower +0.53 ms
+file --mime-type                                 0.95 - 111.32x slower +1038.42 ms
 
 Memory usage statistics:
 
-Name                               Memory usage
-MimeSniff.from_file (512 bytes)         4.66 MB
-MimeSniff.from_file (64 bytes)          2.76 MB - 0.59x memory usage -1.90202 MB
-file --mime-type                        3.59 MB - 0.77x memory usage -1.06661 MB
+Name                                       Memory usage
+MimeSniff.from_file (default: 32 bytes)         2.26 MB
+MimeSniff.from_file (64 bytes)                  2.49 MB - 1.11x memory usage +0.24 MB
+file --mime-type                                3.59 MB - 1.59x memory usage +1.33 MB
 
 **All measurements for memory usage were the same**

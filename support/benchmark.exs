@@ -16,10 +16,8 @@ test_file_paths =
     "support/fixtures/mp4_file.mp4",
     "support/fixtures/excel_file.xlsx",
     "support/fixtures/csv_file.csv",
-    "support/fixtures/bd_at_60_file",
-    "support/fixtures/utf8_file.txt",
-    "support/fixtures/utf8_file.txt",
-    "support/fixtures/bd_at_60_file"
+    "support/fixtures/bd_at_30_file",
+    "support/fixtures/utf8_file.txt"
   ]
   |> Stream.cycle()
 
@@ -37,7 +35,7 @@ Benchee.run(
     "file --mime-type" => fn input ->
       Enum.map(input, &System.cmd("file", ["--mime-type", &1]))
     end,
-    "MimeSniff.from_file (512 bytes)" => fn input ->
+    "MimeSniff.from_file (default: 32 bytes)" => fn input ->
       Enum.map(input, &MimeSniff.from_file(&1))
     end,
     "MimeSniff.from_file (64 bytes)" => fn input ->
