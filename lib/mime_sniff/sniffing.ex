@@ -9,6 +9,9 @@ defmodule MimeSniff.MimeSniff.Sniffing do
   # https://mimesniff.spec.whatwg.org/#reading-the-resource-header
   @default_sniff_len 512
 
+  @type sniff_opt :: {:sniff_len, integer()} | {:custom_signatures, term()}
+
+  @spec from_file(binary(), list(sniff_opt())) :: {:ok, String.t()} | {:error, atom()}
   def from_file(file_path, opts \\ []) do
     sniff_len = Keyword.get(opts, :sniff_len, @default_sniff_len)
 
@@ -17,6 +20,7 @@ defmodule MimeSniff.MimeSniff.Sniffing do
     |> from_binary(opts)
   end
 
+  @spec from_binary(String.t(), list(sniff_opt())) :: {:ok, String.t()} | {:error, atom()}
   def from_binary(data, opts \\ []) when is_binary(data) do
     sniff_len = Keyword.get(opts, :sniff_len, @default_sniff_len)
     custom_signatures = Keyword.get(opts, :custom_signatures, [])
