@@ -1,7 +1,7 @@
 defimpl MimeSniff.Matchable, for: MimeSniff.Signatures.MP4Signature do
   @moduledoc """
   Functions in this module were implemented
-  as defined in https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern
+  as defined in https://mimesniff.spec.whatwg.org/#signature-for-mp4
   """
 
   alias MimeSniff.MimeSniff.Helpers

@@ -12,4 +12,11 @@ defmodule MimeSniff.MimeSniff.HelpersTest do
       assert Helpers.c_to_b(<<20>>) == 20
     end
   end
+
+  describe "b_big_endian_to_uint/1" do
+    test "return uint given bytes in big endian" do
+      assert Helpers.b_big_endian_to_uint(<<0x00, 0x00, 0x00, 0x1E>>) == 30
+      assert Helpers.b_big_endian_to_uint(<<0x00, 0x4A, 0x00, 0x1E>>) == 4_849_694
+    end
+  end
 end

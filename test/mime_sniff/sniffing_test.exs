@@ -76,7 +76,4 @@ defmodule MimeSniff.MimeSniff.SniffingTest do
                {:ok, "text/plain"}
     end
   end
-
-  describe "from_binary/2" do
-  end
 end
