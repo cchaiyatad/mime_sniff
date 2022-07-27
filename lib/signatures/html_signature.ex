@@ -1,5 +1,9 @@
 defmodule MimeSniff.Signatures.HTMLSignature do
   @moduledoc false
+  @type t :: %__MODULE__{
+          :byte_pattern => binary(),
+          :pattern_mask => binary() | nil
+        }
 
   defstruct byte_pattern: <<>>, pattern_mask: nil
 end
@@ -17,6 +21,11 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.HTMLSignature 
 
   @mime_type "text/html"
 
+  @doc """
+  Function is implemented as defined in
+  [Matching a MIME Type pattern](https://mimesniff.spec.whatwg.org/#matching-a-mime-type-pattern)
+  """
+  @spec match(HTMLSignature.t(), binary()) :: {:ok, String.t()} | {:error, atom()}
   def match(%HTMLSignature{byte_pattern: byte_pattern} = signature, data) when is_binary(data) do
     with :ok <- valid_signature_pattern(signature),
          data <- ignored_ws(data),

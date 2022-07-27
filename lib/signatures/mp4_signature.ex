@@ -1,20 +1,21 @@
 defmodule MimeSniff.Signatures.MP4Signature do
   @moduledoc false
+  @type t :: %__MODULE__{}
 
   defstruct []
 end
 
 defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.MP4Signature do
-  @moduledoc """
-  Functions in this module were implemented
-  as defined in https://mimesniff.spec.whatwg.org/#signature-for-mp4
-  """
-
   alias MimeSniff.Helpers
   alias MimeSniff.Signatures.MP4Signature
 
   @mime_type "video/mp4"
 
+  @doc """
+  Function is implemented as defined in
+  [matching signature for mp4](https://mimesniff.spec.whatwg.org/#signature-for-mp4)
+  """
+  @spec match(MP4Signature.t(), binary()) :: {:ok, String.t()} | {:error, atom()}
   def match(%MP4Signature{}, data) when is_binary(data) do
     with :ok <- validate_length(data),
          box_size <- get_box_size(data),

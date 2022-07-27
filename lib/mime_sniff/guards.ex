@@ -1,6 +1,6 @@
 defmodule MimeSniff.Guards do
   @moduledoc """
-  Functions in this module were implemented as defined
+  Guards in this module were implemented as defined
   in [terminlogy](https://mimesniff.spec.whatwg.org/#terminology)
   """
 

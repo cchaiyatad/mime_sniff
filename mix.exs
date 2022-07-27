@@ -70,7 +70,7 @@ defmodule MimeSniff.MixProject do
       source_ref: "v#{@version}",
       canonical: "http://hexdocs.pm/mime_sniff",
       source_url: @source_url,
-      extras: ["README.md", "LICENSE.md", "docs/support_types.md"]
+      extras: ["README.md", "docs/support_types.md", "LICENSE.md"]
     ]
   end
 end
