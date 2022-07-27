@@ -2,7 +2,7 @@ defmodule MimeSniff do
   @moduledoc """
   A MIME Type detection by magic number in Elixir.
   """
-  alias MimeSniff.MimeSniff.Sniffing
+  alias MimeSniff.Sniffing
 
   @type sniff_opt :: {:sniff_len, integer()} | {:custom_signatures, term()}
 

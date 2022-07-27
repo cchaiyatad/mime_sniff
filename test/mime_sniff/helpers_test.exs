@@ -1,6 +1,6 @@
-defmodule MimeSniff.MimeSniff.HelpersTest do
+defmodule MimeSniff.HelpersTest do
   use ExUnit.Case
-  alias MimeSniff.MimeSniff.Helpers
+  alias MimeSniff.Helpers
 
   describe "c_to_b/1" do
     test "return correct byte from string with length = 1" do

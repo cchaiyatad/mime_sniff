@@ -1,10 +1,16 @@
-defimpl MimeSniff.Matchable, for: MimeSniff.Signatures.MP4Signature do
+defmodule MimeSniff.Signatures.MP4Signature do
+  @moduledoc false
+
+  defstruct []
+end
+
+defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.MP4Signature do
   @moduledoc """
   Functions in this module were implemented
   as defined in https://mimesniff.spec.whatwg.org/#signature-for-mp4
   """
 
-  alias MimeSniff.MimeSniff.Helpers
+  alias MimeSniff.Helpers
   alias MimeSniff.Signatures.MP4Signature
 
   @mime_type "video/mp4"

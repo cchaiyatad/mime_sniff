@@ -1,8 +1,8 @@
-defmodule MimeSniff.MimeSniff.Sniffing do
+defmodule MimeSniff.Sniffing do
   @moduledoc false
 
-  alias MimeSniff.Matchable
-  alias MimeSniff.MimeSniff.{Signatures, Helpers}
+  alias MimeSniff.Signatures.Signature
+  alias MimeSniff.{Helpers, Signatures}
 
   @default_signatures Signatures.get_default_signatures()
 
@@ -35,7 +35,7 @@ defmodule MimeSniff.MimeSniff.Sniffing do
   defp do_match([], _data), do: {:ok, "application/octet-stream"}
 
   defp do_match([sig | rest], data) do
-    case Matchable.match(sig, data) do
+    case Signature.match(sig, data) do
       {:ok, mime_type} -> {:ok, mime_type}
       {:error, :not_match} -> do_match(rest, data)
       {:error, error} -> {:error, error}

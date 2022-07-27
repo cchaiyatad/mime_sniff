@@ -1,7 +1,7 @@
-defmodule MimeSniff.MimeSniff.SignaturesTest do
+defmodule MimeSniff.SignaturesTest do
   use ExUnit.Case
 
-  alias MimeSniff.MimeSniff.Signatures
+  alias MimeSniff.Signatures
 
   alias MimeSniff.Signatures.{
     ExactSignature,

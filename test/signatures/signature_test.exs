@@ -1,7 +1,7 @@
-defmodule MimeSniff.MatchableTest do
+defmodule MimeSniff.Signatures.SignatureTest do
   use ExUnit.Case
 
-  alias MimeSniff.Matchable
+  alias MimeSniff.Signatures.Signature
 
   alias MimeSniff.Signatures.{
     ExactSignature,
@@ -30,19 +30,19 @@ defmodule MimeSniff.MatchableTest do
     test "return {:ok, image/png} with valid png input", %{png_signature: png_signature} do
       png_data = <<137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13>>
 
-      assert Matchable.match(png_signature, png_data) == {:ok, "image/png"}
+      assert Signature.match(png_signature, png_data) == {:ok, "image/png"}
     end
 
     test "return {:error, :not_match} with pdf input", %{png_signature: png_signature} do
       pdf_data = <<37, 80, 68, 70, 45, 49, 46, 53, 10, 37, 208>>
 
-      assert Matchable.match(png_signature, pdf_data) == {:error, :not_match}
+      assert Signature.match(png_signature, pdf_data) == {:error, :not_match}
     end
 
     test "return {:ok, text/xml} with valid xml input", %{xml_signature: xml_signature} do
       # "    <?xml  "
       xml_data = <<32, 32, 32, 32, 60, 63, 120, 109, 108, 32, 32>>
-      assert Matchable.match(xml_signature, xml_data) == {:ok, "text/xml"}
+      assert Signature.match(xml_signature, xml_data) == {:ok, "text/xml"}
     end
   end
 
@@ -65,7 +65,7 @@ defmodule MimeSniff.MatchableTest do
       # '          <P '
       p_tag_data = <<32, 32, 32, 32, 32, 32, 32, 32, 32, 32, 60, 80, 32, 0>>
 
-      assert Matchable.match(p_tag_signature, p_tag_data) == {:ok, "text/html"}
+      assert Signature.match(p_tag_signature, p_tag_data) == {:ok, "text/html"}
     end
 
     test "return {:ok, image/png} with valid p tag lower case input", %{
@@ -74,12 +74,12 @@ defmodule MimeSniff.MatchableTest do
       # <p>
       p_tag_data = <<60, 112, 62, 0>>
 
-      assert Matchable.match(p_tag_signature, p_tag_data) == {:ok, "text/html"}
+      assert Signature.match(p_tag_signature, p_tag_data) == {:ok, "text/html"}
     end
 
     test "return {:error, :not_match} with png input", %{p_tag_signature: p_tag_signature} do
       png_data = <<137, 80, 78, 71, 13, 10, 26, 10, 0, 0, 0, 13>>
-      assert Matchable.match(p_tag_signature, png_data) == {:error, :not_match}
+      assert Signature.match(p_tag_signature, png_data) == {:error, :not_match}
     end
   end
 
@@ -101,7 +101,7 @@ defmodule MimeSniff.MatchableTest do
       utf_16be_bom_signature: utf_16be_bom_signature
     } do
       xml_data = <<254, 255, 15, 32>>
-      assert Matchable.match(utf_16be_bom_signature, xml_data) == {:ok, "text/plain"}
+      assert Signature.match(utf_16be_bom_signature, xml_data) == {:ok, "text/plain"}
     end
   end
 
@@ -113,14 +113,14 @@ defmodule MimeSniff.MatchableTest do
           105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49, 0, 0, 68, 128, 109, 111, 111, 118,
           0, 0, 0, 108, 109, 118, 104, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 232>>
 
-      assert Matchable.match(%MP4Signature{}, mp4_data) == {:ok, "video/mp4"}
+      assert Signature.match(%MP4Signature{}, mp4_data) == {:ok, "video/mp4"}
     end
 
     test "return {:error, :not_match} when input length(data) < 12 (6.2.1.3)" do
       # first 10 bytes from mp4 file
       mp4_data = <<0, 0, 0, 32, 102, 116, 121, 112, 105, 115>>
 
-      assert Matchable.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+      assert Signature.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
     end
 
     test "return {:error, :not_match} when length(data) is less than box_size (6.2.1.5)" do
@@ -129,7 +129,7 @@ defmodule MimeSniff.MatchableTest do
         <<0, 0, 0, 64, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
           105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
 
-      assert Matchable.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+      assert Signature.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
     end
 
     test "return {:error, :not_match} when box_size % 4 != 0, (6.2.1.5)" do
@@ -138,7 +138,7 @@ defmodule MimeSniff.MatchableTest do
         <<0, 0, 0, 18, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
           105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
 
-      assert Matchable.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+      assert Signature.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
     end
 
     test "return {:error, :not_match} with valid input" do
@@ -147,7 +147,7 @@ defmodule MimeSniff.MatchableTest do
         <<0, 0, 0, 20, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
           105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
 
-      assert Matchable.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+      assert Signature.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
     end
   end
 
@@ -156,13 +156,13 @@ defmodule MimeSniff.MatchableTest do
       # hello worlds!
       text_data = <<104, 101, 108, 108, 111, 32, 119, 111, 114, 108, 100, 115, 33>>
 
-      assert Matchable.match(%TextPlainSignature{}, text_data) == {:ok, "text/plain"}
+      assert Signature.match(%TextPlainSignature{}, text_data) == {:ok, "text/plain"}
     end
 
     test "return {:error, :not_match} with binary data input" do
       binary_data = <<37, 80, 68, 70, 45, 0, 49, 46, 53, 10, 37, 208>>
 
-      assert Matchable.match(%TextPlainSignature{}, binary_data) == {:error, :not_match}
+      assert Signature.match(%TextPlainSignature{}, binary_data) == {:error, :not_match}
     end
   end
 end
