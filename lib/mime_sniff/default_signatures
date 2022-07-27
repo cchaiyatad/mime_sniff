@@ -1,0 +1,64 @@
+# 7.1 https://mimesniff.spec.whatwg.org/#identifying-a-resource-with-an-unknown-mime-type
+# 7.1.1 Matching a html, xml or pdf type pattern
+HTMLSignature,3C 21 44 4F 43 54 59 50 45 20 48 54 4D 4C,FF FF DF DF DF DF DF DF DF FF DF DF DF DF
+HTMLSignature,3C 48 54 4D 4C,FF DF DF DF DF
+HTMLSignature,3C 48 45 41 44,FF DF DF DF DF
+HTMLSignature,3C 53 43 52 49 50 54,FF DF DF DF DF DF DF
+HTMLSignature,3C 49 46 52 41 4D 45,FF DF DF DF DF DF DF
+HTMLSignature,3C 48 31,FF DF FF
+HTMLSignature,3C 44 49 56,FF DF DF DF
+HTMLSignature,3C 46 4F 4E 54,FF DF DF DF DF
+HTMLSignature,3C 54 41 42 4C 45,FF DF DF DF DF DF
+HTMLSignature,3C 41,FF DF
+HTMLSignature,3C 53 54 59 4C 45,FF DF DF DF DF DF
+HTMLSignature,3C 54 49 54 4C 45,FF DF DF DF DF DF
+HTMLSignature,3C 42,FF DF
+HTMLSignature,3C 42 4F 44 59,FF DF DF DF DF
+HTMLSignature,3C 42 52,FF DF DF
+HTMLSignature,3C 50,FF DF
+HTMLSignature,3C 21 2D 2D,FF FF FF FF
+ExactSignature,3C 3F 78 6D 6C,true,text/xml
+ExactSignature,25 50 44 46 2D,application/pdf
+# 7.1.2 Matching application/postscript or UTF text type pattern
+ExactSignature,25 21 50 53 2D 41 64 6F 62 65 2D,application/postscript
+MaskedSignature,FE FF 00 00,FF FF 00 00,text/plain
+MaskedSignature,FF FE 00 00,FF FF 00 00,text/plain
+MaskedSignature,EF BB BF 00,FF FF FF 00,text/plain
+# 7.1.3 Matching an image type pattern https://mimesniff.spec.whatwg.org/#matching-an-image-type-pattern
+ExactSignature,00 00 01 00,image/x-icon
+ExactSignature,00 00 02 00,image/x-icon
+ExactSignature,42 4D,image/bmp
+ExactSignature,47 49 46 38 37 61,image/gif
+ExactSignature,47 49 46 38 39 61,image/gif
+MaskedSignature,52 49 46 46 00 00 00 00 57 45 42 50 56 50,FF FF FF FF 00 00 00 00 FF FF FF FF FF FF,image/webp
+ExactSignature,89 50 4E 47 0D 0A 1A 0A,image/png
+ExactSignature,FF D8 FF,image/jpeg
+# 7.1.5 Matching an audio or video type pattern https://mimesniff.spec.whatwg.org/#matching-an-audio-or-video-type-pattern
+MaskedSignature,46 4F 52 4D 00 00 00 00 41 49 46 46,FF FF FF FF 00 00 00 00 FF FF FF FF,audio/aiff
+ExactSignature,49 44 33,audio/mpeg
+ExactSignature,4F 67 67 53 00,application/ogg
+ExactSignature,4D 54 68 64 00 00 00 06,audio/midi
+MaskedSignature,52 49 46 46 00 00 00 00 41 56 49 20,FF FF FF FF 00 00 00 00 FF FF FF FF,video/avi
+MaskedSignature,52 49 46 46 00 00 00 00 57 41 56 45,FF FF FF FF 00 00 00 00 FF FF FF FF,audio/wave
+# 6.2.1 Matching a MP4 pattern https://mimesniff.spec.whatwg.org/#signature-for-mp4
+MP4Signature
+# 6.2.2 Matching a WebM pattern https://mimesniff.spec.whatwg.org/#signature-for-webm
+# only check first four bytes
+# TODO: complete implement this algorithm  
+ExactSignature,1A 45 DF A3,video/webm
+# 6.2.3 Matching a MP3 without id3 pattern https://mimesniff.spec.whatwg.org/#signature-for-mp3-without-id3
+# TODO: complete implement this algorithm  
+# 7.1.? Matching a font type pattern https://mimesniff.spec.whatwg.org/#matching-a-font-type-pattern
+MaskedSignature,00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 4C 50,00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF,application/vnd.ms-fontobject
+ExactSignature,00 01 00 00,font/ttf
+ExactSignature,4F 54 54 4F,font/otf
+ExactSignature,74 74 63 66,font/collection
+ExactSignature,77 4F 46 46,font/woff
+ExactSignature,77 4F 46 32,font/woff2
+# 7.1.7 Matching an archive type pattern https://mimesniff.spec.whatwg.org/#matching-an-archive-type-pattern
+ExactSignature,1F 8B 08,application/x-gzip
+ExactSignature,50 4B 03 04,application/zip
+ExactSignature,52 61 72 20 1A 07 00,application/x-rar-compressed
+# 7.1.9 Matching text type pattern
+TextPlainSignature
+# 7.1.10 Fallback application/octet-stream
