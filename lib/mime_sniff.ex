@@ -14,7 +14,7 @@ defmodule MimeSniff do
     * `:sniff_len` - set how many bytes of data from the head that should
       be use to determine the MIME Type (default 32).
 
-      If this value is less than byte_size(data) only data[:sniff_len] will be used;
+      If this value is less than `byte_size(data)` only `data[:sniff_len]` will be used;
       Otherwise, the whole data will be used
 
     * `:custom_signatures` - a list of Struct that implemented `MimeSniff.Signatures.Signature`

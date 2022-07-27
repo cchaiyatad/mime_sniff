@@ -58,7 +58,7 @@ defmodule MimeSniff.MixProject do
   defp package() do
     [
       maintainers: ["Chaiyatad Chanasuppakul"],
-      licenses: ["MIT License"],
+      licenses: ["MIT"],
       links: %{"GitHub" => @source_url}
     ]
   end
