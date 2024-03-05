@@ -33,7 +33,7 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.MP4Signature d
   end
 
   # (6.2.1.4)
-  defp get_box_size(<<h::bytes-size(4), _::binary()>>), do: Helpers.b_big_endian_to_uint(h)
+  defp get_box_size(<<h::bytes-size(4), _::binary>>), do: Helpers.b_big_endian_to_uint(h)
 
   # (6.2.1.5)
   defp validate_box_size_length(data, box_size) do
@@ -45,7 +45,7 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.MP4Signature d
 
   defp do_match(
          <<_raw_box_size::bytes-size(4), maybe_ftyp::bytes-size(4), maybe_mp4::bytes-size(3),
-           _::binary()>> = data,
+           _::binary>> = data,
          box_size
        ) do
     cond do
@@ -60,7 +60,7 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.MP4Signature d
       true ->
         # skip first 16 bytes (6.2.1.8)
         remain = box_size - 16
-        <<_::bytes-size(16), rest::bytes-size(remain), _rest::binary()>> = data
+        <<_::bytes-size(16), rest::bytes-size(remain), _rest::binary>> = data
         # begin the loop (6.2.1.9)
         iterating_check_size_box(rest)
     end
@@ -69,10 +69,10 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.MP4Signature d
   defp iterating_check_size_box(<<>>), do: {:error, :not_match}
 
   # (6.2.1.9.1)
-  defp iterating_check_size_box(<<d::bytes-size(3), _::binary()>>) when d == "mp4",
+  defp iterating_check_size_box(<<d::bytes-size(3), _::binary>>) when d == "mp4",
     do: {:ok, @mime_type}
 
   # (6.2.1.9.2)
-  defp iterating_check_size_box(<<_::bytes-size(4), rest::binary()>>),
+  defp iterating_check_size_box(<<_::bytes-size(4), rest::binary>>),
     do: iterating_check_size_box(rest)
 end

@@ -11,7 +11,7 @@ The package can be installed by adding `mime_sniff` to your list of dependencies
 ```elixir
 def deps do
   [
-    {:mime_sniff, "~> 0.1.0"}
+    {:mime_sniff, "~> 0.1.1"}
   ]
 end
 ```
