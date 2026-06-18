@@ -7,7 +7,7 @@ defmodule MimeSniff.Helpers do
 
   def read_byte_from_file(file_path, len) do
     file_path
-    |> File.stream!([], len)
+    |> File.stream!(len)
     |> Enum.take(1)
     |> case do
       [] -> <<>>
