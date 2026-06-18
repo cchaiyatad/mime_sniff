@@ -23,7 +23,7 @@ defmodule MimeSniff.Signatures do
   return list of Signature
   """
   def get_default_signatures do
-    for line <- File.stream!(@default_signatures_path, [], :line),
+    for line <- File.stream!(@default_signatures_path),
         not String.starts_with?(line, @comment_marker),
         do: build_signature_from_line(line)
   end
