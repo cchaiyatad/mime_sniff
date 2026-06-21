@@ -6,12 +6,15 @@ defmodule MimeSniff.Helpers do
   def b_big_endian_to_uint(b), do: :binary.decode_unsigned(b)
 
   def read_byte_from_file(file_path, len) do
-    file_path
-    |> File.stream!(len)
-    |> Enum.take(1)
-    |> case do
-      [] -> <<>>
-      [data] -> data
+    file = File.open!(file_path, [:read, :binary])
+
+    try do
+      case IO.binread(file, len) do
+        :eof -> <<>>
+        data -> data
+      end
+    after
+      File.close(file)
     end
   end
 end

@@ -1,8 +1,8 @@
 defmodule MimeSniff.Sniffing do
   @moduledoc false
 
-  alias MimeSniff.Signatures.Signature
   alias MimeSniff.{Helpers, Signatures}
+  alias MimeSniff.Signatures.Signature
 
   @default_signatures Signatures.get_default_signatures()
 
