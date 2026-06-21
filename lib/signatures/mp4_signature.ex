@@ -60,7 +60,7 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.MP4Signature d
       true ->
         # skip first 16 bytes (6.2.1.8)
         remain = box_size - 16
-        <<_::bytes-size(16), rest::bytes-size(^remain), _rest::binary>> = data
+        rest = binary_part(data, 16, remain)
         # begin the loop (6.2.1.9)
         iterating_check_size_box(rest)
     end
