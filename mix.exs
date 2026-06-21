@@ -2,7 +2,7 @@ defmodule MimeSniff.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/cchaiyatad/mime_sniff"
-  @version "0.1.1"
+  @version System.get_env("PROJECT_VERSION") || "0.0.0-dev"
 
   def project do
     [

@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   release:
-    name: Bump, tag and publish
+    name: Tag and publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -24,18 +24,11 @@ jobs:
           elixir-version: "1.20.1"
           otp-version: "28.0"
 
-      - name: Bump @version in mix.exs
-        run: |
-          sed -i -E 's/@version "[^"]+"/@version "${{ inputs.version }}"/' mix.exs
-          grep '@version' mix.exs
-
-      - name: Commit, tag and push
+      - name: Create and push tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git commit -am "chore: release v${{ inputs.version }}"
           git tag "v${{ inputs.version }}"
-          git push origin HEAD
           git push origin "v${{ inputs.version }}"
 
       - name: Install Dependencies
@@ -47,4 +40,5 @@ jobs:
       - name: Publish package
         run: mix hex.publish --yes
         env:
+          PROJECT_VERSION: ${{ inputs.version }}
           HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
