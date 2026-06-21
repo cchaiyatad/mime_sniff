@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   release:
-    name: Tag and publish
+    name: Publish and tag
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -22,14 +22,7 @@ jobs:
         uses: erlef/setup-beam@v1
         with:
           elixir-version: "1.20.1"
-          otp-version: "28.0"
-
-      - name: Create and push tag
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag "v${{ inputs.version }}"
-          git push origin "v${{ inputs.version }}"
+          otp-version: "28.1"
 
       - name: Install Dependencies
         run: |
@@ -42,3 +35,10 @@ jobs:
         env:
           PROJECT_VERSION: ${{ inputs.version }}
           HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
+
+      - name: Create and push tag
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git tag "v${{ inputs.version }}"
+          git push origin "v${{ inputs.version }}"
