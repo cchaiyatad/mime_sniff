@@ -17,7 +17,7 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.HTMLSignature 
   alias MimeSniff.Helpers
   alias MimeSniff.Signatures.HTMLSignature
 
-  use Bitwise
+  import Bitwise
 
   @mime_type "text/html"
 

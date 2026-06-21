@@ -49,7 +49,7 @@ end
 defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.MaskedSignature do
   alias MimeSniff.Helpers
   alias MimeSniff.Signatures.MaskedSignature
-  use Bitwise
+  import Bitwise
 
   @doc """
   Function is implemented as defined in

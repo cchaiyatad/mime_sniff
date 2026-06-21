@@ -44,11 +44,14 @@ or you can run it yourself by executing `mix bench`. This command will execute [
 
 ## Release flow
 
-Releases are published to [Hex](https://hex.pm/packages/mime_sniff) automatically by the
-[`Release` workflow](.github/workflows/release.yml) whenever a `v*` tag is pushed:
+Releases are handled by the [`Release` workflow](.github/workflows/release.yml), run manually
+from the **Actions** tab (or `gh workflow run Release`):
 
-1. Bump `@version` in [`mix.exs`](mix.exs).
-2. `git tag vX.Y.Z && git push origin vX.Y.Z`
+1. Enter the `version` to release, e.g. `0.1.2`.
+2. The workflow bumps `@version` in [`mix.exs`](mix.exs), commits it, creates and pushes a
+   `vX.Y.Z` tag, then publishes the package to [Hex](https://hex.pm/packages/mime_sniff).
+
+Publishing is authenticated via the `HEX_API_KEY` repository secret.
 
 ## License
 
