@@ -42,6 +42,14 @@ Full result can be found in [benchmark result](https://github.com/cchaiyatad/mim
 
 or you can run it yourself by executing `mix bench`. This command will execute [benchmark.exs](support/benchmark.exs) file.
 
+## Release flow
+
+Releases are published to [Hex](https://hex.pm/packages/mime_sniff) automatically by the
+[`Release` workflow](.github/workflows/release.yml) whenever a `v*` tag is pushed:
+
+1. Bump `@version` in [`mix.exs`](mix.exs).
+2. `git tag vX.Y.Z && git push origin vX.Y.Z`
+
 ## License
 
 MimeSniff is released under the MIT License - see the [LICENSE](LICENSE.md) file.
