@@ -1,7 +1,7 @@
 defmodule MimeSniff.SniffingTest do
   use ExUnit.Case
-  alias MimeSniff.Sniffing
   alias MimeSniff.Signatures.{ExactSignature, MaskedSignature}
+  alias MimeSniff.Sniffing
 
   describe "from_file/2" do
     test "return {:ok, mime_type} from file" do
