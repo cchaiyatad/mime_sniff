@@ -42,6 +42,14 @@ Full result can be found in [benchmark result](https://github.com/cchaiyatad/mim
 
 or you can run it yourself by executing `mix bench`. This command will execute [benchmark.exs](support/benchmark.exs) file.
 
+## Release flow
+
+Releases are handled by the [`Release` workflow](.github/workflows/release.yml), run manually
+from the **Actions** tab (or `gh workflow run Release`):
+
+1. Enter the `version` to release, e.g. `0.1.2`.
+2. The workflow creates and pushes the matching `vX.Y.Z` tag, then publishes the package to [Hex](https://hex.pm/packages/mime_sniff) with that version.
+
 ## License
 
 MimeSniff is released under the MIT License - see the [LICENSE](LICENSE.md) file.

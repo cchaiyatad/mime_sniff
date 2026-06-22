@@ -8,6 +8,7 @@ defmodule MimeSniff.SignaturesTest do
     HTMLSignature,
     MaskedSignature,
     ISOMediaSignature,
+    Signature,
     TextPlainSignature
   }
 
@@ -226,6 +227,87 @@ defmodule MimeSniff.SignaturesTest do
                },
                %TextPlainSignature{}
              ]
+    end
+  end
+
+  describe "Signature.match/2 for HTMLSignature" do
+    test "return {:ok, mime_type}, ignoring leading whitespace" do
+      signature = %HTMLSignature{byte_pattern: "<A", pattern_mask: <<255, 223>>}
+
+      assert Signature.match(signature, "<a>") == {:ok, "text/html"}
+      assert Signature.match(signature, " \t<A>") == {:ok, "text/html"}
+    end
+
+    test "return {:error, :not_match} when bytes do not match the pattern" do
+      signature = %HTMLSignature{byte_pattern: "<A", pattern_mask: <<255, 223>>}
+
+      assert Signature.match(signature, "<x>") == {:error, :not_match}
+    end
+
+    test "return {:error, :not_match} when no tag-terminating byte follows" do
+      signature = %HTMLSignature{byte_pattern: "<A", pattern_mask: <<255, 223>>}
+
+      assert Signature.match(signature, "<a") == {:error, :not_match}
+    end
+
+    test "return {:error, :invalid_pattern} for missing or mismatched pattern" do
+      assert Signature.match(%HTMLSignature{byte_pattern: nil, pattern_mask: <<255>>}, "<a>") ==
+               {:error, :invalid_pattern}
+
+      assert Signature.match(%HTMLSignature{byte_pattern: "<A", pattern_mask: nil}, "<a>") ==
+               {:error, :invalid_pattern}
+
+      assert Signature.match(%HTMLSignature{byte_pattern: "<A", pattern_mask: <<255>>}, "<a>") ==
+               {:error, :invalid_pattern}
+    end
+  end
+
+  describe "Signature.match/2 for MaskedSignature" do
+    test "return {:ok, mime_type} when the masked bytes match" do
+      signature = %MaskedSignature{
+        byte_pattern: <<0xFE, 0xFF>>,
+        pattern_mask: <<0xFF, 0xFF>>,
+        mime_type: "text/plain"
+      }
+
+      assert Signature.match(signature, <<0xFE, 0xFF>>) == {:ok, "text/plain"}
+    end
+
+    test "return {:error, :not_match} when bytes differ" do
+      signature = %MaskedSignature{
+        byte_pattern: <<0xFE, 0xFF>>,
+        pattern_mask: <<0xFF, 0xFF>>,
+        mime_type: "text/plain"
+      }
+
+      assert Signature.match(signature, <<0x00, 0x00>>) == {:error, :not_match}
+    end
+
+    test "return {:error, :not_match} when data is shorter than the pattern" do
+      signature = %MaskedSignature{
+        byte_pattern: <<0xFE, 0xFF>>,
+        pattern_mask: <<0xFF, 0xFF>>,
+        mime_type: "text/plain"
+      }
+
+      assert Signature.match(signature, <<0xFE>>) == {:error, :not_match}
+    end
+
+    test "return {:error, :invalid_pattern} for missing or mismatched pattern" do
+      assert Signature.match(
+               %MaskedSignature{byte_pattern: nil, pattern_mask: <<255>>},
+               <<0xFE>>
+             ) == {:error, :invalid_pattern}
+
+      assert Signature.match(
+               %MaskedSignature{byte_pattern: <<0xFE>>, pattern_mask: nil},
+               <<0xFE>>
+             ) == {:error, :invalid_pattern}
+
+      assert Signature.match(
+               %MaskedSignature{byte_pattern: <<0xFE, 0xFF>>, pattern_mask: <<255>>},
+               <<0xFE, 0xFF>>
+             ) == {:error, :invalid_pattern}
     end
   end
 end

@@ -2,7 +2,7 @@ defmodule MimeSniff.MixProject do
   use Mix.Project
 
   @source_url "https://github.com/cchaiyatad/mime_sniff"
-  @version "0.1.1"
+  @version System.get_env("PROJECT_VERSION") || "0.0.0-dev"
 
   def project do
     [
@@ -36,9 +36,9 @@ defmodule MimeSniff.MixProject do
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:benchee, "~> 1.1", [only: [:dev]]},
-      {:credo, "~> 1.6", [only: [:dev, :test], runtime: false]},
-      {:dialyxir, "~> 1.1", [only: [:dev, :test], runtime: false]},
+      {:benchee, "~> 1.5", [only: [:dev]]},
+      {:credo, "~> 1.7", [only: [:dev, :test], runtime: false]},
+      {:dialyxir, "~> 1.4", [only: [:dev, :test], runtime: false]},
       {:ex_doc, ">= 0.0.0", only: :dev, runtime: false}
     ]
   end
