@@ -7,7 +7,7 @@ defmodule MimeSniff.SignaturesTest do
     ExactSignature,
     HTMLSignature,
     MaskedSignature,
-    MP4Signature,
+    ISOMediaSignature,
     Signature,
     TextPlainSignature
   }
@@ -16,7 +16,7 @@ defmodule MimeSniff.SignaturesTest do
     test "return list of signature from default_signatures file" do
       default_signatures = Signatures.get_default_signatures()
 
-      assert length(default_signatures) == 50
+      assert length(default_signatures) == 51
 
       assert default_signatures == [
                %HTMLSignature{
@@ -170,7 +170,16 @@ defmodule MimeSniff.SignaturesTest do
                    <<0x00, 0x00, 0x00, 0x00, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF,
                      0xFF>>
                },
-               %MP4Signature{},
+               %ISOMediaSignature{
+                 ftyp_value: "heic",
+                 ftyp_size: 4,
+                 mime_type: "image/heic"
+               },
+               %ISOMediaSignature{
+                 ftyp_value: "mp4",
+                 ftyp_size: 3,
+                 mime_type: "video/mp4"
+               },
                %ExactSignature{
                  byte_pattern: <<26, 69, 223, 163>>,
                  mime_type: "video/webm"

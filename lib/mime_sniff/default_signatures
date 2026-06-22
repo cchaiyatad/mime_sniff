@@ -42,8 +42,10 @@ MaskedSignature,52 49 46 46 00 00 00 00 41 56 49 20,FF FF FF FF 00 00 00 00 FF F
 MaskedSignature,52 49 46 46 00 00 00 00 57 41 56 45,FF FF FF FF 00 00 00 00 FF FF FF FF,audio/wave
 # Matching 3GPP video
 MaskedSignature,00 00 00 00 66 74 79 70 33 67 70 34 00,00 00 00 00 FF FF FF FF FF FF FF FF FF,video/3gpp
+# Matching HEIF image
+ISOMediaSignature,68 65 69 63,image/heic
 # 6.2.1 Matching a MP4 pattern https://mimesniff.spec.whatwg.org/#signature-for-mp4
-MP4Signature
+ISOMediaSignature,6D 70 34,video/mp4
 # 6.2.2 Matching a WebM pattern https://mimesniff.spec.whatwg.org/#signature-for-webm
 # only check first four bytes
 # TODO: complete implement this algorithm  
