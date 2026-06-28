@@ -2,11 +2,6 @@ name: Release
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: "Version to release, e.g. 0.1.2"
-        type: string
-        required: true
 
 permissions:
   contents: write
@@ -30,15 +25,18 @@ jobs:
           mix local.hex --force
           mix deps.get
 
+      - name: Read version
+        id: ver
+        run: echo "version=$(mix eval 'IO.puts(Mix.Project.config()[:version])')" >> "$GITHUB_OUTPUT"
+
       - name: Publish package
         run: mix hex.publish --yes
         env:
-          PROJECT_VERSION: ${{ inputs.version }}
           HEX_API_KEY: ${{ secrets.HEX_API_KEY }}
 
       - name: Create and push tag
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git tag "v${{ inputs.version }}"
-          git push origin "v${{ inputs.version }}"
+          git tag "v${{ steps.ver.outputs.version }}"
+          git push origin "v${{ steps.ver.outputs.version }}"
