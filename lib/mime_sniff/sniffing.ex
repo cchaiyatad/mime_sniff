@@ -26,7 +26,7 @@ defmodule MimeSniff.Sniffing do
     sniff_len = Keyword.get(opts, :sniff_len, @default_sniff_len)
     custom_signatures = Keyword.get(opts, :custom_signatures, [])
 
-    trimmed_data = String.slice(data, 0, sniff_len)
+    trimmed_data = binary_part(data, 0, min(sniff_len, byte_size(data)))
 
     do_match(custom_signatures ++ @default_signatures, trimmed_data)
   end
