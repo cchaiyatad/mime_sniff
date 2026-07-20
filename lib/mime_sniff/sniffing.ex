@@ -6,9 +6,12 @@ defmodule MimeSniff.Sniffing do
 
   @default_signatures Signatures.get_default_signatures()
 
-  # 36 is the minimum number of bytes to use
-  # to support all file type that program can sniff
-  @default_sniff_len 36
+  # 1445 is the resource header size defined in
+  # https://mimesniff.spec.whatwg.org/#reading-the-resource-header
+  # It is the minimum number of bytes needed to support all file types that
+  # the program can sniff: MP3Signature must fit two consecutive frames, and
+  # a maximum-size MPEG1 Layer III frame is 1440 bytes + padding + 4 header bytes.
+  @default_sniff_len 1445
 
   @type sniff_opt :: {:sniff_len, integer()} | {:custom_signatures, term()}
 

@@ -5,6 +5,7 @@ defmodule MimeSniff.Signatures do
     ExactSignature,
     HTMLSignature,
     MaskedSignature,
+    MP3Signature,
     MP4Signature,
     TextPlainSignature
   }
@@ -16,6 +17,7 @@ defmodule MimeSniff.Signatures do
     "HTMLSignature" => :html,
     "MaskedSignature" => :masked,
     "TextPlainSignature" => :text_plain,
+    "MP3Signature" => :mp3,
     "MP4Signature" => :mp4
   }
   @doc """
@@ -58,6 +60,8 @@ defmodule MimeSniff.Signatures do
       pattern_mask: hexs_with_space_to_binaries(pattern_mask),
       mime_type: mime_type
     }
+
+  defp build_signature(:mp3, _args), do: %MP3Signature{}
 
   defp build_signature(:mp4, _args), do: %MP4Signature{}
 
