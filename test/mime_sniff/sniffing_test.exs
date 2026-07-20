@@ -47,6 +47,15 @@ defmodule MimeSniff.SniffingTest do
                {:ok, "application/octet-stream"}
     end
 
+    test "sniff_len trims by bytes, not by UTF-8 graphemes" do
+      # 16 bytes of two-byte graphemes followed by a binary data byte: a
+      # grapheme-based slice of 16 would include the 0x00 and misclassify
+      # this as application/octet-stream.
+      data = String.duplicate("é", 8) <> <<0x00>> <> "x"
+
+      assert Sniffing.from_binary(data, sniff_len: 16) == {:ok, "text/plain"}
+    end
+
     test "return {:ok, mime_type} when provided custom signature" do
       custom_utf8_sig = %ExactSignature{byte_pattern: "UTF8", mime_type: "custom/utf8"}
       custom_utf16_sig = %ExactSignature{byte_pattern: "UTF16", mime_type: "custom/utf16"}

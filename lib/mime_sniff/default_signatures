@@ -49,7 +49,7 @@ MP4Signature
 # TODO: complete implement this algorithm  
 ExactSignature,1A 45 DF A3,video/webm
 # 6.2.3 Matching a MP3 without id3 pattern https://mimesniff.spec.whatwg.org/#signature-for-mp3-without-id3
-# TODO: complete implement this algorithm  
+MP3Signature
 # 7.1.? Matching a font type pattern https://mimesniff.spec.whatwg.org/#matching-a-font-type-pattern
 MaskedSignature,00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 4C 50,00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 FF FF,application/vnd.ms-fontobject
 ExactSignature,00 01 00 00,font/ttf
