@@ -6,8 +6,8 @@ defmodule MimeSniff.SignaturesTest do
   alias MimeSniff.Signatures.{
     ExactSignature,
     HTMLSignature,
-    MaskedSignature,
     ISOMediaSignature,
+    MaskedSignature,
     Signature,
     TextPlainSignature
   }
