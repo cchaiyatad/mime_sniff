@@ -4,9 +4,8 @@ defmodule MimeSniff.Signatures do
   alias MimeSniff.Signatures.{
     ExactSignature,
     HTMLSignature,
-    MaskedSignature,
-    MP4Signature,
     ISOMediaSignature,
+    MaskedSignature,
     TextPlainSignature
   }
 
@@ -17,7 +16,6 @@ defmodule MimeSniff.Signatures do
     "HTMLSignature" => :html,
     "MaskedSignature" => :masked,
     "TextPlainSignature" => :text_plain,
-    "MP4Signature" => :mp4,
     "ISOMediaSignature" => :iso_media
   }
   @doc """
@@ -60,8 +58,6 @@ defmodule MimeSniff.Signatures do
       pattern_mask: hexs_with_space_to_binaries(pattern_mask),
       mime_type: mime_type
     }
-
-  defp build_signature(:mp4, _args), do: %MP4Signature{}
 
   defp build_signature(:iso_media, [ftyp_value, mime_type]) do
     ftyp = hexs_with_space_to_binaries(ftyp_value)
