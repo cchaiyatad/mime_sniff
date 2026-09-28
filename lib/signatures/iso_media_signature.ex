@@ -68,8 +68,11 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.ISOMediaSignat
       maybe_value == signature.ftyp_value ->
         {:ok, signature.mime_type}
 
+      # skip first 16 bytes (6.2.1.8); no compatible brands left to check
+      box_size <= 16 ->
+        {:error, :not_match}
+
       true ->
-        # skip first 16 bytes (6.2.1.8)
         remain = box_size - 16
         <<_::bytes-size(16), rest::bytes-size(remain), _rest::binary>> = data
         # begin the loop (6.2.1.9)

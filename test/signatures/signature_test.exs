@@ -153,6 +153,15 @@ defmodule MimeSniff.Signatures.SignatureTest do
       assert Signature.match(mp4_signature, mp4_data) == {:error, :not_match}
     end
 
+    test "return {:error, :not_match} when box_size <= 16 and major brand differs (6.2.1.9)", %{
+      mp4_signature: mp4_signature
+    } do
+      # box_size = 12, major brand "isom", no room for compatible brands
+      mp4_data = <<0, 0, 0, 12, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 0, 0>>
+
+      assert Signature.match(mp4_signature, mp4_data) == {:error, :not_match}
+    end
+
     test "return {:error, :not_match} with valid input", %{mp4_signature: mp4_signature} do
       # first 32 bytes from mp4 file with mp4 at bytes[29:32]
       mp4_data =
