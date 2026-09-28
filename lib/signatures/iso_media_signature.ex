@@ -14,8 +14,14 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.ISOMediaSignat
   alias MimeSniff.Signatures.ISOMediaSignature
 
   @doc """
-  Function is implemented as defined in
-  [matching signature for mp4](https://mimesniff.spec.whatwg.org/#signature-for-mp4)
+  Matches ISO Base Media File Format (ISO/IEC 14496-12) files by looking for
+  `ftyp_value` among the brands in the `ftyp` box: first the major brand, then
+  each compatible brand. Only the first `ftyp_size` bytes of each brand are
+  compared, so e.g. `"mp4"` matches the brands `mp41` and `mp42`.
+
+  This generalizes the WHATWG
+  [signature for MP4](https://mimesniff.spec.whatwg.org/#signature-for-mp4)
+  algorithm to any ISO media based format, such as MP4 and HEIF/HEIC.
   """
   @spec match(ISOMediaSignature.t(), binary()) :: {:ok, String.t()} | {:error, atom()}
   def match(%ISOMediaSignature{} = signature, data) when is_binary(data) do
@@ -58,7 +64,7 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.ISOMediaSignat
       maybe_ftyp != "ftyp" ->
         {:error, :not_match}
 
-      # if sequence[8:11] != ftyp_value return true (6.2.1.7)
+      # if sequence[8:8 + ftyp_size] == ftyp_value return true (6.2.1.7)
       maybe_value == signature.ftyp_value ->
         {:ok, signature.mime_type}
 
