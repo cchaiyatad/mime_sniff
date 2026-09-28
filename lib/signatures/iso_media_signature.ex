@@ -56,8 +56,8 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.ISOMediaSignat
          data,
          box_size
        ) do
-    <<_raw_box_size::bytes-size(4), maybe_ftyp::bytes-size(4), maybe_value::bytes-size(ftyp_size),
-      _::binary>> = data
+    <<_raw_box_size::bytes-size(4), maybe_ftyp::bytes-size(4), _::binary>> = data
+    maybe_value = binary_part(data, 8, ftyp_size)
 
     cond do
       # if sequence[4:8] != "ftyp" return false (6.2.1.6)
@@ -73,8 +73,7 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.ISOMediaSignat
         {:error, :not_match}
 
       true ->
-        remain = box_size - 16
-        <<_::bytes-size(16), rest::bytes-size(remain), _rest::binary>> = data
+        rest = binary_part(data, 16, box_size - 16)
         # begin the loop (6.2.1.9)
         iterating_check_size_box(signature, rest)
     end
@@ -88,9 +87,7 @@ defimpl MimeSniff.Signatures.Signature, for: MimeSniff.Signatures.ISOMediaSignat
            signature,
          <<type::bytes-size(4), rest::binary>>
        ) do
-    <<compare_type::bytes-size(ftyp_size), _rest::binary>> = type
-
-    if compare_type == ftyp_value do
+    if binary_part(type, 0, ftyp_size) == ftyp_value do
       {:ok, mime_type}
     else
       iterating_check_size_box(signature, rest)
