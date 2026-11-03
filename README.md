@@ -11,7 +11,7 @@ The package can be installed by adding `mime_sniff` to your list of dependencies
 ```elixir
 def deps do
   [
-    {:mime_sniff, "~> 0.1.1"}
+    {:mime_sniff, "~> 0.1.4"}
   ]
 end
 ```
@@ -47,8 +47,8 @@ or you can run it yourself by executing `mix bench`. This command will execute [
 Releases are handled by the [`Release` workflow](.github/workflows/release.yml), run manually
 from the **Actions** tab (or `gh workflow run Release`):
 
-1. Enter the `version` to release, e.g. `0.1.2`.
-2. The workflow creates and pushes the matching `vX.Y.Z` tag, then publishes the package to [Hex](https://hex.pm/packages/mime_sniff) with that version.
+1. Bump `@version` in `mix.exs` (and the version in the installation snippet above), then merge it to `master`.
+2. Run the `Release` workflow on `master`. It reads the version from `mix.exs`, publishes the package to [Hex](https://hex.pm/packages/mime_sniff), then creates and pushes the matching `vX.Y.Z` tag.
 
 ## License
 
