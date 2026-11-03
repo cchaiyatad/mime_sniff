@@ -10,15 +10,17 @@ on:
 jobs:
   lint:
     name: Lint
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - elixir: "1.13.3"
             otp: "25.0.2"
+            os: ubuntu-22.04
           - elixir: "1.20.1"
             otp: "28.1"
+            os: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
 
@@ -50,15 +52,17 @@ jobs:
 
   test:
     name: Test
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - elixir: "1.13.3"
             otp: "25.0.2"
+            os: ubuntu-22.04
           - elixir: "1.20.1"
             otp: "28.1"
+            os: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
 
@@ -89,15 +93,17 @@ jobs:
 
   spec_check:
     name: Dialyzer
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - elixir: "1.13.3"
             otp: "25.0.2"
+            os: ubuntu-22.04
           - elixir: "1.20.1"
             otp: "28.1"
+            os: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
 
