@@ -6,8 +6,8 @@ defmodule MimeSniff.Signatures.SignatureTest do
   alias MimeSniff.Signatures.{
     ExactSignature,
     HTMLSignature,
+    ISOMediaSignature,
     MaskedSignature,
-    MP4Signature,
     TextPlainSignature
   }
 
@@ -105,49 +105,70 @@ defmodule MimeSniff.Signatures.SignatureTest do
     end
   end
 
-  describe "match/2 with MP4Signature" do
-    test "return {:ok, video/mp4} with valid input" do
+  describe "match/2 with ISOMediaSignature for mp4" do
+    setup do
+      %{
+        mp4_signature: %ISOMediaSignature{ftyp_value: "mp4", ftyp_size: 3, mime_type: "video/mp4"}
+      }
+    end
+
+    test "return {:ok, video/mp4} with valid input", %{mp4_signature: mp4_signature} do
       # first 64 bytes from mp4 file
       mp4_data =
         <<0, 0, 0, 32, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
           105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49, 0, 0, 68, 128, 109, 111, 111, 118,
           0, 0, 0, 108, 109, 118, 104, 100, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 3, 232>>
 
-      assert Signature.match(%MP4Signature{}, mp4_data) == {:ok, "video/mp4"}
+      assert Signature.match(mp4_signature, mp4_data) == {:ok, "video/mp4"}
     end
 
-    test "return {:error, :not_match} when input length(data) < 12 (6.2.1.3)" do
+    test "return {:error, :not_match} when input length(data) < 12 (6.2.1.3)", %{
+      mp4_signature: mp4_signature
+    } do
       # first 10 bytes from mp4 file
       mp4_data = <<0, 0, 0, 32, 102, 116, 121, 112, 105, 115>>
 
-      assert Signature.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+      assert Signature.match(mp4_signature, mp4_data) == {:error, :not_match}
     end
 
-    test "return {:error, :not_match} when length(data) is less than box_size (6.2.1.5)" do
+    test "return {:error, :not_match} when length(data) is less than box_size (6.2.1.5)", %{
+      mp4_signature: mp4_signature
+    } do
       # first 32 bytes from mp4 file with box_size = 64
       mp4_data =
         <<0, 0, 0, 64, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
           105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
 
-      assert Signature.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+      assert Signature.match(mp4_signature, mp4_data) == {:error, :not_match}
     end
 
-    test "return {:error, :not_match} when box_size % 4 != 0, (6.2.1.5)" do
+    test "return {:error, :not_match} when box_size % 4 != 0, (6.2.1.5)", %{
+      mp4_signature: mp4_signature
+    } do
       # first 32 bytes from mp4 file with box_size = 18
       mp4_data =
         <<0, 0, 0, 18, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
           105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
 
-      assert Signature.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+      assert Signature.match(mp4_signature, mp4_data) == {:error, :not_match}
     end
 
-    test "return {:error, :not_match} with valid input" do
+    test "return {:error, :not_match} when box_size <= 16 and major brand differs (6.2.1.9)", %{
+      mp4_signature: mp4_signature
+    } do
+      # box_size = 12, major brand "isom", no room for compatible brands
+      mp4_data = <<0, 0, 0, 12, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 0, 0>>
+
+      assert Signature.match(mp4_signature, mp4_data) == {:error, :not_match}
+    end
+
+    test "return {:error, :not_match} with valid input", %{mp4_signature: mp4_signature} do
       # first 32 bytes from mp4 file with mp4 at bytes[29:32]
       mp4_data =
         <<0, 0, 0, 20, 102, 116, 121, 112, 105, 115, 111, 109, 0, 0, 2, 0, 105, 115, 111, 109,
           105, 115, 111, 50, 97, 118, 99, 49, 109, 112, 52, 49>>
 
-      assert Signature.match(%MP4Signature{}, mp4_data) == {:error, :not_match}
+      assert Signature.match(mp4_signature, mp4_data) == {:error, :not_match}
     end
   end
 
